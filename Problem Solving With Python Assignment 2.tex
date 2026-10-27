@@ -1,0 +1,252 @@
+\documentclass[11pt]{article}
+
+%####### DON'T CHANGE MARGIN SETTINGS ###########
+\newcommand{\keywordfont}{\textsc}
+\newcommand{\keyword}[1]{%
+  \marginpar{\raggedright\small\keywordfont{#1}}}
+\reversemarginpar
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, outer=2cm, inner=3.3cm, marginparwidth=72pt, heightrounded]{geometry}
+%#################################
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{microtype}
+
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{Conjecture}
+
+
+
+
+\begin{document}
+
+\Large
+\begin{center}
+\textbf{MA3K7-A1 Assignment $2$}
+\\
+Andy Moston (5650294)
+\end{center}
+\normalsize
+
+
+
+
+\section{Entry}
+
+
+\begin{itemize}
+
+\item The coin is fair ($0.5$ chance of landing on either side saying $1$ or $2$)\keyword{I know}
+\item The assumption follows that each coin flip is independent
+\item No ‘gaps’ in timeline or any non positive integers
+\item Numbers go greater than $26$ (to infinity) we want to land EXACTLY on $26$ at some point
+\item Since regression does not need to be accounted for (we can only move forward) the only options are we land on $26$ exactly once, or never.\\
+\end{itemize}
+
+\begin{itemize}
+\item ‘Combination’ refers to a set of $1$s and $2$s \keyword{Notation} whose sum, unless otherwise specified, equates to $25$. 
+\item The count of $1$s in a combination is denoted as $a$, and is likewise denoted as $b$ for the count of $2$s.
+\item The total collective count of 1s and 2s in a combination is referred to as the length, l. This means that $a+b = l$\\
+\end{itemize}
+
+\begin{itemize}
+\item The count of how many ordered combinations of \keyword{I Want} 1s and 2s sum to 25 (the distance from 1 to 26). This is how many ways we can get the outcome we want.
+\item The count of how many ordered combinations of 1s and 2s sum to 26 (the distance from 1 to 27). This accounts for all possible outcomes.
+\item Use classical probability to then find the probability of landing on 26\\
+\end{itemize}
+
+As  we can only move in steps of 1 or 2\keyword{Justify} forwards, these together account for all instances where we land on 26 exactly once, and all instances where we never. There can be no other possibilities, thus we can find the probability.
+
+
+\section{Attack}
+I want to break down the question. First, I want to attempt to count how many ordered combinations of 1s and 2s sum to 25, to figure out all the possible ways we could ever land on 26. 
+
+As this would be a very long list of combinations were I to brute force it, I need to break down the problem, and I need to figure out how.\\
+
+I think the count of combinations that sum to 26 \keyword{Maybe} can be found fairly easily by using the count of combinations that sum to 25 if I’m smart about how I do it.
+
+
+We can consider two different ways of taking a \keyword{Justify} combination that sums to 25 and adapting them so that they now add to 26:
+
+\begin{itemize}
+\item Any Ordered Combination: to get from a sum of 25 to 26, we may simply add a 1 onto the end of all of these combinations.
+\item Any Ordered Combination Ending in a 1: In addition to doing the above, we can take the ending 1 in a combination and turn it into a 2. This still changes the sum from 25 to 25.
+\end{itemize}
+
+From this, we reach a conjecture we will more rigorously investigate\\
+
+To find the difference between \keyword{Conjecture 1} the count of combinations that sum to 25, and the count of combinations that sum to 26, we can count the number of combinations that sum to 25 that end in a 1.\\
+
+
+As we can take an ordered combination of \keyword{Pause}length $l$ that ends in a 1 and we can either add an extra 1 on the end (making the combination’s new length $l+1$) or we can change the ending 1 into a 2 (Maintaining the combination’s length as $l$), with both achieving a new sum of 26, we can see that not all combinations that achieve the same sum will have the same length. This may pose an issue.\\
+
+To see if/why this was a problem, I \keyword{But Why} considered a simplified case of the assignment problem, where we want to land on 4 instead of 26, with all the other same conditions as in the original question. I will first set out the following conjecture, rather than interrupting the example to introduce and prove it\\
+
+The Probability of a combination of length $l$ \keyword{Conjecture 2}  happening is $\left( \frac{1}{2} \right) ^l$
+
+The coin tosses are \keyword{Proof} independent of eachother: that is, the outcome of the $n^{th}$ coin toss does not impact the probability of any outcomes of another $m^{th}$ coin toss. This is an assumption I made based off of the fact this is a fair coin.
+For independent events $A, B, C, …,$ the joint probability of them happening is:
+
+$$P(A \cap B \cap C \cap …) = P(A) \times P(B) \times P(C) \times …$$
+
+For this problem, the probability of any event happening (the coin flipping either a 1 or a 2 on any $n^{th}$ coin toss) is ½. So, if we have a combination of length $l$, we will have:
+
+$$ P ( A \cap B \cap ... \cap L ) = P(A) \times P(B) \times  ... \times P(L) = \frac{1}{2} \times \frac{1}{2} \times ... \times \frac{1}{2} =  \left( \frac{1}{2} \right) ^l$$
+
+
+
+
+We’re considering the probability of landing \keyword{Introduce} on 4 instead of 26, with all other conditions of the question the same. This means we want a combination of 1s and 2s with a sum of 3, as it takes three steps to get from 1 to 4. As this is a smaller, simpler question, we can investigate an exhaustive list of these combinations with ease:
+
+$$(1, 1, 1) ; (1 , 2) ; (2, 1)$$
+
+As we can see, they have different lengths but achieve the same sum. However, once we consider the probability of each of these combinations happening, the error in my assumptions becomes apparent.
+
+$(1, 1, 1)$, a combination of length $l=3$, has probability of happening $\left( \frac{1}{2} \right) ^3 = \frac{1}{8}$. However, $(1, 2)$ and $(2, 1)$, as combinations of length $l=2$, instead have probabilities $\left( \frac{1}{2} \right)^2 = \frac{1}{4}$ of happening.
+
+With an exhaustive list identified, I can find that the probability of landing on 4 is $\frac{1}{8} + \frac{1}{4} + \frac{1}{4} = \frac{5}{8}$
+Were I to use the method I initially set out to use to solve the original problem, I’d find the list of Ordered Combinations summing to 4 (landing on 5) were:
+
+$$(1, 1, 1, 1) \, ; \, (1, 1, 2) \, ; \, (1, 2, 1) \, ; \, (2, 1, 1,) \, ; \, (2, 2)$$
+
+Classical Probability: There are 3 outcomes that land on 4, and 5 possible outcomes overall, of either ‘landing on 4’ or ‘skipping over 4 (not landing on it)’. This means the probability of landing on 4 would have come to $\frac{3}{5}$, which we know is not the case. My original method is wrong\\
+
+So how do I fix this issue? I now only need to \keyword{Stuck} pay mind to the different ordered combinations that land me on 26 rather than having to also consider the counts of combinations that land me any higher, but I still have the issue of needing to find how to break down the question. I no longer only care about the count of ordered combinations that land me on 26, but also their lengths—and in turn each combination’s respective probability of happening.\\
+
+
+If I sorted ordered combinations by length, \keyword{Maybe} I don’t have to find each ordered combination’s probability individually, but rather find their probabilities in sets. For this problem all that matters for finding a combination’s probability is its length, as addressed in Conjecture 2.\\
+
+I will try collecting combinations by \keyword{Try}how many 1s (and, in turn, how many 2s) they have. Firstly, I want to give myself less computing to do by narrowing down what $(a,b)$ pairs allow for a sum of 25 in the first place.\\
+
+
+A sum of 25 made of only 1s and 2s requires \keyword{Conjecture 3} an odd number of 1s\\
+
+A sum $S$ comprised of only 1s and 2s is odd \keyword{Generalise} iff the number of 1s in the sum is odd\\
+
+Let the number of 1s in a sum be $a$, and let\keyword{Proof} the number of 2s in a sum be $b$.
+Working in modulo 2.
+
+\[
+1 \equiv 1 \pmod{2}
+\]
+\[
+2 \equiv 0 \pmod{2}
+\]
+
+Thus:
+\[
+S \equiv 1 \cdot a + 0 \cdot b  \pmod{2}
+\]
+So $S$ is odd only when a is odd, and thus $S$ is odd only when the number of 1s in the sum is odd.\\
+
+So we only need to account for odd numbers of 1s. I made a table in python to break down the corresponding number of 2s and the combinations length for each possible number of 1s we could have in a combination: 
+
+
+\begin{figure}[h] % h means put the figure "here"
+   \centering
+   \includegraphics[width=2in]{PSWP Assignment 2 Figure 1.png} 
+   \label{myfig}
+\end{figure}
+
+
+
+As we can see, ordered combinations of the \keyword{Aha} same length are going to only ever be rearrangements of a combination with certain $a$ and $b$ values! This means, to find all ordered combinations of length $l$, we just need to find the number of distinct permutations there are!\\
+
+
+\section{Re-Entry}
+Feeling I now have a route of solution that’ll work, I decide to re-establish my ‘WHAT I WANT to better break down what needs to be found
+
+\begin{itemize}
+\item To find all the combinations of unordered \keyword{What I want} 1s and 2s that result in a sum of 25
+\item The number of distinct permutations of each
+\item To find the probability of one ordering of each combination happening
+\item The Probability of any ordering of a combination length l occurring
+\item  The sum of the probability of any ordering of a combination occurring for all combinations, which should be the solution to the problem.
+\end{itemize}
+
+
+\section{Solution}
+
+To  find the number of permutations for each combination, you find the length l, and factorise it. However, as none of the 1s are disctint from eachother, nor are any of the 2s, to remove non distinct repeats we divide this by the number of 1s in the combination, $a$, and the number of 2s in the combination, $b$.
+
+
+This gives us the formula to find the number of distinct permutations for each combination as
+
+$$\frac{l!}{a! \times b!}$$
+
+The probability of a singular ordering of a combination of length $l$ happening is, as previously established, 
+
+$$\left( \frac{1}{2} \right) ^l$$
+
+Thus, the probability of any ordered combination happening of a particular length is:
+
+$$\frac{l!}{a! \times b!} \times \left( \frac{1}{2} \right) ^l$$
+
+
+The amount of 1s, $a$, in a combination of length $l$ can be written as $2 l -25$. The amount of 2s, $b$, can likewise be written as $25 - l$
+
+Thus, the overall probability of landing on 26 is a sumnation of the probability of any combination Cl happening:
+
+\[
+\sum_{l=13}^{25} \left( \frac{l!}{a! \times b!} \times \left( \frac{1}{2} \right) ^l \right) \; = \; \sum_{l=13}^{25} \left( \frac{l!}{ (2l -25)! \times (25-l)!} \times \left( \frac{1}{2} \right) ^l \right) 
+\]
+
+Which, when I plugged into python code to solve, allows me to have solved the probability of landing on 26 as:
+
+$$0.6666666567325592 \approx \frac{2}{3}$$
+
+
+
+\section{Review}
+
+My first step in checking \keyword{Check} the validity of my answer was doing it by hand-- to avoid any errors in my code or in my construction of the equations. Thankfully, the result came out the same!
+
+I felt intimidated by a probability question when \keyword{Reflect} I haven’t practiced that area in maths in so long, and I lacked confidence that I’d get it right—or more critically, I feared I’d get it wrong without knowing. Having failed and adapted my method has helped, and looking back on my old, original method and being able to see all of its flaws lets me believe I’ve improved:
+
+I attempted to solve the question with the method I initially intended to use. However, upon revisiting it after better understanding probability, I found a further reason why it would not work. Even if the length of a combination did not matter in counting the probability, I still wouldn’t have found a solution with the initial method I set out with. This is because for me to have used my method I’d have needed a count of all possible outcomes. However, the numbered path is infinitely long, meaning ‘all possible outcomes’ is computationally impossible. I was mistaken in thinking counting all combinations that land you on 27 was sufficient.
+
+
+A possible way to extend the problem—and a way \keyword{Extension}that ensures the method I used no longer works—is to make the coin unfair. Either by having it prefer falling on a certain side: i.e landing on 2 is twice as likely as landing on 1, or by having each coin toss no longer be independent. This doesn’t necessarily mean my method cannot be adapted at all. For example, in the former case, the probability of a combination happening would turn to $\left( \frac{2}{3} \right) ^b \times \left( \frac{1}{3} \right) ^a$
+
+This would give a total outcome of:
+
+
+\[
+\sum_{l=13}^{25} \left( \frac{l!}{ (2l -25)! \times (25-l)!} \times \left( \frac{2}{3} \right) ^{25-l} \times \left( \frac{1}{3} \right) ^{2l - 25} \right)
+\]
+
+In hindsight, I found that the method I found—although my own—is rudimentary
+
+
+Using some a method involving recursion, \keyword{Generalise} we have an easier time of generalizing of calculating the probability of landing on any numbered tile $n$. Where $P_n$ is the probability of landing on number tile $n$ starting from $1$:
+
+$$P_n = \frac{1}{2} P_{n-1} + \frac{1}{2} P_{n-2}$$
+
+This could be extended too if the randomised outcome included 3, too. I.e take 1 step forward, 2 steps forward, or 3 steps forward:
+
+$$P_n = \frac{1}{3} P_{n-1} + \frac{1}{3} P_{n-2} + \frac{1}{3} P_{n-3}$$
+
+Where we can see this generalised to, for any possible step forward of size x or less
+
+
+\[
+P_n = \sum_{m=1}^{x} \left( \frac{1}{x} P_{n-m} \right)
+\]
+
+This, however, is assuming that the probability of every outcome is the same. Taking the example above of the possible steps only being 1, 2, or 3, we could have it where 3 has a lower probability of happening: for example:
+
+$$P_n = \frac{2}{5} P_{n-1} + \frac{2}{5} P_{n-2} + \frac{1}{5} P_{n-3}$$
+
+
+
+
+\section*{Code}
+The code for this assignment can be found on my GitHub page:\\  
+\url{https://github.com/siriwarwick/book/tree/main/Chapter4}
+
+In particular, \texttt{mandelbrot.ipynb} was used to plot fig. 1.
+
+\end{document}
